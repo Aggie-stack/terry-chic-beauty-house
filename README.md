@@ -49,6 +49,7 @@ This project provides an intuitive interface for clients and admin users to mana
 
 ## 📁 Project Structure
 
+<<<<<<< HEAD
 Salon/
 ├── client/ # React frontend
 │ ├── public/
@@ -159,4 +160,10 @@ I can generate the exact commands for you — just say **“yes”**.
 
 
 
+
+=======
+>>>>>>> 5ebc4f614a1073a05e98edfbc284ffcc751f24e4
+<<<<<<< HEAD
+=======
+>>>>>>> origin/main
 
