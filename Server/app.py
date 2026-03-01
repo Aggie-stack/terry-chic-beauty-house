@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from models import db, Booking, Service, Testimonial, Post
+from Server.models import db, Booking, Service, Testimonial, Post
 from schemas import ma, BookingSchema, ServiceSchema, TestimonialSchema, PostSchema
 import os
 from flask_migrate import Migrate
