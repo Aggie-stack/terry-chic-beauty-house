@@ -8,19 +8,28 @@ import datetime
 import requests
 from requests_oauthlib import OAuth1
 import urllib.parse
+import mysql.connector
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 # ---------------- DATABASE ----------------
-basedir = os.path.abspath(os.path.dirname(__file__))
-db_file = os.path.join(basedir, "salon.db")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_file
+# Hardcoded MySQL connection (replace with your credentials)
+DB_USER = "terry"
+DB_PASSWORD = "mypassword123"  # <-- put your MySQL password here
+DB_HOST = "localhost"
+DB_PORT = 3306
+DB_NAME = "salon"  # <-- make sure this database exists
+
+# SQLAlchemy MySQL URI
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Initialize database
 db.init_app(app)
 ma.init_app(app)
 migrate = Migrate(app, db)
+
 
 # ---------------- SCHEMAS ----------------
 booking_schema = BookingSchema()
@@ -35,7 +44,7 @@ PESAPAL_CONSUMER_SECRET = os.environ.get("PESAPAL_CONSUMER_SECRET", "t+MxgyNRh43
 PESAPAL_CALLBACK_URL = os.environ.get("PESAPAL_CALLBACK_URL", "http://localhost:5000/api/payment-callback")
 PESAPAL_BASE_URL = "https://demo.pesapal.com/api/PostPesapalDirectOrderV4"
 
-# ---------------- HOME ----------------
+# ---------------- ROUTES ----------------
 @app.route("/")
 def home():
     return jsonify({"message": "Welcome to Terry's Salon API"})
@@ -177,4 +186,5 @@ def create_pesapal_payment(amount, first_name, last_name, email, phone_number, r
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
