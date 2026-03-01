@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from models import Booking, Service, Testimonial, Post
+from .models import Booking, Service, Testimonial, Post
 
 ma = Marshmallow()
 
